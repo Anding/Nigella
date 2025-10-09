@@ -12,16 +12,20 @@ entity program_flow is
 	port (
 		clk : in std_logic;
 		rst : in std_logic;
-		-- program memory access
+		-- program memory
 		program_counter : out program_counter_type;
-		next_instruction : in program_flow_instruction_type;
-		next_instruction_offset : in program_counter_offset;
+		-- instruction decoding
+		instruction : in instruction_type;
+		instruction_payload : in program_counter_offset;			-- branch offset / jump literal
+		instruction_width : in program_counter_offset;				-- number of bytes of program memory comprising this instruction
+		instruction_duration : in instruction_duration_type;		-- required clock cycles to execute the instruction
 		-- datapath inspection
-		equal_zero : in std_logic;		
-		-- return stack access and control
-		return_program_counter : in program_counter_offset;
-		push_return_program_counter : in std_logic;
-		pop_return_program_counter : out std_logic;
+		equal_zero : in std_logic;											-- conditional flag of parameter stack
+		top_of_p_stack : in p_stack_cell;								-- parameter stack 
+		-- subroutine stack access and control
+		top_of_s_stack : in program_counter_offset;					-- subroutine stack
+		push_s_stack : in std_logic;
+		pop_s_stack : out std_logic;
 	);
 	
 end entity;
