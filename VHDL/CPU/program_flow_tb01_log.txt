@@ -14,7 +14,7 @@ rst = 0, PC = 10, vld = 0
 rst = 0, PC = 11, vld = 1                                                                                                       
 rst = 0, PC = 10, vld = 0                                                                                                       
 rst = 0, PC = 11, vld = 1                                                                                                       
-                                                                                                                                
+rst = 0, PC = 10, vld = 0                                                                                                       
                                                                                                                                 
                                                                                                                                 
                                                                                                                                 

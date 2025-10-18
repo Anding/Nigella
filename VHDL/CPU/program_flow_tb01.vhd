@@ -24,6 +24,7 @@ signal top_of_s_stack : program_counter_type := 0;
 signal push_s_stack : std_logic;
 signal pop_s_stack : std_logic;
 
+signal test_ended : boolean := false;
 signal test_ok : boolean := false;
 
 shared variable tb_rec : testbench_recorder_protected ;
@@ -65,11 +66,18 @@ begin
 	recorder: process is
 	begin
 		wait until rising_edge(clk);
-		tb_rec.make_record(
-			"rst = " & to_string(rst) & ", " &
-			"PC = " & to_string(program_counter) & ", " &
-			"vld = " & to_string(valid_instruction)
-				);
+			if (test_ended) then
+				-- either save or verify
+					tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+				--	tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+				--	tb_rec.verify_recording_to_reference;
+			else
+				tb_rec.make_record(
+					"rst = " & to_string(rst) & ", " &
+					"PC = " & to_string(program_counter) & ", " &
+					"vld = " & to_string(valid_instruction)
+						);
+			end if;
 	end process;	
 		
 	sequencer_process: process is
@@ -80,15 +88,11 @@ begin
 		wait until rising_edge(clk);
 			
 		wait for 14 * clock_period;
-		-- either record or verify
---		tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-		-- either record or verify			
-		tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-		tb_rec.verify_recording_to_reference;
-		--	
-		report ("*** TEST COMPLETED OK ***");
-		test_ok <= true; 
-		wait for clock_period;
+		
+		test_ended <= true;	wait for clock_period;
+		-- save or verify the testbench recording
+		test_ok <= true;	wait for clock_period; 
+		report ("*** TEST COMPLETED OK ***");		
 		std.env.finish;
 	end process;
 
