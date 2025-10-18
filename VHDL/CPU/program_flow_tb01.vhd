@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 library work;
 use work.constants.all;
 use work.types.all;
+use work.testbench_recorder.all;
 
 entity program_flow_tb01 is
 end entity;
@@ -24,6 +25,8 @@ signal push_s_stack : std_logic;
 signal pop_s_stack : std_logic;
 
 signal test_ok : boolean := false;
+
+shared variable tb_rec : testbench_recorder_protected ;
 
 -- example program flow data
 type instruction_mem_type is array (0 to 15) of instruction_type;
@@ -52,12 +55,22 @@ begin
 	
 	clk <= not clk after half_clock_period;
 	
-	sequencer_program_memory: process is
+	program_memory: process is
 	begin
 		wait until rising_edge(clk);	
 		instruction <= instruction_mem(program_counter);
 		instruction_literal <= instruction_literal_mem(program_counter);	
 	end process;
+	
+	recorder: process is
+	begin
+		wait until rising_edge(clk);
+		tb_rec.make_record(
+			"rst = " & to_string(rst) & ", " &
+			"PC = " & to_string(program_counter) & ", " &
+			"vld = " & to_string(valid_instruction)
+				);
+	end process;	
 		
 	sequencer_process: process is
 	begin
@@ -66,7 +79,13 @@ begin
 		
 		wait until rising_edge(clk);
 			
-		wait for 10 * clock_period;
+		wait for 14 * clock_period;
+		-- either record or verify
+--		tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+		-- either record or verify			
+		tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+		tb_rec.verify_recording_to_reference;
+		--	
 		report ("*** TEST COMPLETED OK ***");
 		test_ok <= true; 
 		wait for clock_period;
