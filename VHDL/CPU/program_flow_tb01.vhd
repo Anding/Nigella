@@ -15,17 +15,23 @@ signal clk : std_logic := '0';
 signal rst : std_logic := '1';
 signal program_counter : program_counter_type;
 signal instruction : instruction_type := pf_nxt_1;
-signal instruction_payload : program_counter_offset := 0;
+signal instruction_literal : instruction_literal_type := 0;
 signal valid_instruction : std_logic;
 signal equal_zero : std_logic := '0';
 signal top_of_p_stack : p_stack_cell := (others=>'0');
-signal top_of_s_stack : program_counter_offset := 0;
+signal top_of_s_stack : program_counter_type := 0;
 signal push_s_stack : std_logic;
 signal pop_s_stack : std_logic;
 
+signal test_ok : boolean := false;
+
+-- example program flow data
 type instruction_mem_type is array (0 to 15) of instruction_type;
 signal instruction_mem : instruction_mem_type := (0 => pf_nxt_1, 1 => pf_nxt_1, 2 => pf_nxt_2, 
-		3 => pf_null, 4 => pf_nxt_2, 5 => pf_null, others => pf_nxt_1);
+		3 => pf_null, 4 => pf_nxt_2, 5 => pf_null, 6 => pf_bra, 7 => pf_null, 10 => pf_bra, others => pf_nxt_1);
+
+type instruction_literal_mem_type is array (0 to 15) of instruction_literal_type;
+signal instruction_literal_mem : instruction_literal_mem_type := (6 => 3, 10 => -1, others => 0);
 
 begin
 	
@@ -35,7 +41,7 @@ begin
 		rst => rst,
 		program_counter => program_counter,
 		instruction => instruction,
-		instruction_payload => instruction_payload,
+		instruction_literal => instruction_literal,
 		valid_instruction => valid_instruction,
 		equal_zero => equal_zero,
 		top_of_p_stack => top_of_p_stack,
@@ -46,8 +52,13 @@ begin
 	
 	clk <= not clk after half_clock_period;
 	
-	instruction <= instruction_mem(program_counter);
-	
+	sequencer_program_memory: process is
+	begin
+		wait until rising_edge(clk);	
+		instruction <= instruction_mem(program_counter);
+		instruction_literal <= instruction_literal_mem(program_counter);	
+	end process;
+		
 	sequencer_process: process is
 	begin
 		wait for 3 * half_clock_period;
@@ -57,7 +68,9 @@ begin
 			
 		wait for 10 * clock_period;
 		report ("*** TEST COMPLETED OK ***");
+		test_ok <= true; 
+		wait for clock_period;
 		std.env.finish;
 	end process;
-	
+
 end architecture;
