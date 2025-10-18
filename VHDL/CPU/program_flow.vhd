@@ -18,7 +18,7 @@ entity program_flow is
 		valid_instruction : out std_logic;
 		-- datapath inspection
 		equal_zero : in std_logic;											-- conditional flag of parameter stack
-		top_of_p_stack : in p_stack_cell;								-- parameter stack 
+		top_of_p_stack : in program_counter_type;						-- parameter stack 
 		-- subroutine stack access and control
 		top_of_s_stack : in program_counter_type;						-- subroutine stack
 		push_s_stack : out std_logic;
@@ -70,9 +70,21 @@ begin
 						state_n <= restart_pipeline;
 						pc_n <= pc + 4;
 					
-					when pf_bra =>				-- branch, the offset is calculated from the second byte (i.e. -1 for an indefinate loop)
+					when pf_bra =>				-- branch, the offset is calculated from the second byte (i.e. -1 for an indefinite loop)
 						state_n <= restart_pipeline;
 						pc_n <= pc + instruction_literal;
+
+					when pf_beq =>				-- conditional branch
+						state_n <= restart_pipeline;
+						if (equal_zero = '1') then
+							pc_n <= pc + instruction_literal;
+						else
+							pc_n <= pc + 1;
+						end if;
+							
+					when pf_jmp =>				-- jump to the address on the stack
+						state_n <= restart_pipeline;
+						pc_n <= top_of_p_stack;
 					
 					when others =>				-- pf_nxt_1, a 1 byte sequential instruction
 						state_n <= run_pipeline;	-- the prior instruction length assumption was correct!  Continue execution

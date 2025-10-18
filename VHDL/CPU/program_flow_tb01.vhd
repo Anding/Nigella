@@ -19,7 +19,7 @@ signal instruction : instruction_type := pf_nxt_1;
 signal instruction_literal : instruction_literal_type := 0;
 signal valid_instruction : std_logic;
 signal equal_zero : std_logic := '0';
-signal top_of_p_stack : p_stack_cell := (others=>'0');
+signal top_of_p_stack : program_counter_type := 0;
 signal top_of_s_stack : program_counter_type := 0;
 signal push_s_stack : std_logic;
 signal pop_s_stack : std_logic;
@@ -30,13 +30,20 @@ signal test_ok : boolean := false;
 shared variable tb_rec : testbench_recorder_protected ;
 
 -- example program flow data
-type instruction_mem_type is array (0 to 15) of instruction_type;
+type instruction_mem_type is array (0 to 127) of instruction_type;
 signal instruction_mem : instruction_mem_type := (0 => pf_nxt_1, 1 => pf_nxt_1, 2 => pf_nxt_2, 
-		3 => pf_null, 4 => pf_nxt_2, 5 => pf_null, 6 => pf_bra, 7 => pf_null, 10 => pf_bra, others => pf_nxt_1);
+		3 => pf_null, 4 => pf_nxt_2, 5 => pf_null, 6 => pf_bra, 7 => pf_null, 10 => pf_beq, 11 => pf_null, 
+		12 => pf_jmp, 17 => pf_beq, others => pf_nxt_1);
 
-type instruction_literal_mem_type is array (0 to 15) of instruction_literal_type;
-signal instruction_literal_mem : instruction_literal_mem_type := (6 => 3, 10 => -1, others => 0);
+type instruction_literal_mem_type is array (0 to 127) of instruction_literal_type;
+signal instruction_literal_mem : instruction_literal_mem_type := (6 => 3, 10 => -1, 12 => -1, others => 0);
+	
+type equal_zero_mem_type is array (0 to 127) of std_logic;
+signal equal_zero_mem : equal_zero_mem_type := (12 => '1', others => '0');
 
+type p_stack_cell_mem_type is array (0 to 127) of program_counter_type;
+signal p_stack_cell_mem : p_stack_cell_mem_type := (12 => 16, others => 0);
+	
 begin
 	
 	DUT: entity work.program_flow(rtl)
@@ -61,6 +68,8 @@ begin
 		wait until rising_edge(clk);	
 		instruction <= instruction_mem(program_counter);
 		instruction_literal <= instruction_literal_mem(program_counter);	
+		equal_zero <= equal_zero_mem(program_counter);	
+		top_of_p_stack <= p_stack_cell_mem(program_counter);
 	end process;
 	
 	recorder: process is

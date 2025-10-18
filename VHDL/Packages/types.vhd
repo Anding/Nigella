@@ -10,7 +10,7 @@ package types is
 
 	-- architechure
 	
-	subtype p_stack_cell is std_logic_vector (p_stack_width -1 downto 0);
+	subtype p_stack_cell_type is std_logic_vector (p_stack_width -1 downto 0);
 
 	-- program_flow
 

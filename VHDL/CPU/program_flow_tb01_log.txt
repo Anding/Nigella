@@ -10,11 +10,11 @@ rst = 0, PC = 6, vld = 0
 rst = 0, PC = 7, vld = 1                                                                                                        
 rst = 0, PC = 10, vld = 0                                                                                                       
 rst = 0, PC = 11, vld = 1                                                                                                       
-rst = 0, PC = 10, vld = 0                                                                                                       
-rst = 0, PC = 11, vld = 1                                                                                                       
-rst = 0, PC = 10, vld = 0                                                                                                       
-rst = 0, PC = 11, vld = 1                                                                                                       
-rst = 0, PC = 10, vld = 0                                                                                                       
+rst = 0, PC = 12, vld = 0                                                                                                       
+rst = 0, PC = 13, vld = 1                                                                                                       
+rst = 0, PC = 16, vld = 0                                                                                                       
+rst = 0, PC = 17, vld = 1                                                                                                       
+rst = 0, PC = 18, vld = 1                                                                                                       
                                                                                                                                 
                                                                                                                                 
                                                                                                                                 
