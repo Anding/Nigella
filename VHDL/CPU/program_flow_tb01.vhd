@@ -39,6 +39,9 @@ signal instruction_mem : instruction_mem_type := (0 => pf_nxt_1, 1 => pf_nxt_1, 
 type instruction_literal_mem_type is array (0 to 127) of instruction_literal_type;
 signal instruction_literal_mem : instruction_literal_mem_type := (6 => 3, 10 => -1, 12 => -1, others => 0);
 	
+type instruction_duration_mem_type is array (0 to 127) of instruction_duration_type;
+signal instruction_duration_mem : instruction_duration_mem_type := (others => 0);
+	
 type equal_zero_mem_type is array (0 to 127) of std_logic;
 signal equal_zero_mem : equal_zero_mem_type := (12 => '1', others => '0');
 
@@ -70,6 +73,7 @@ begin
 		wait until rising_edge(clk);	
 		instruction <= instruction_mem(program_counter);
 		instruction_literal <= instruction_literal_mem(program_counter);	
+		instruction_duration <= instruction_duration_mem(program_counter);				
 		equal_zero <= equal_zero_mem(program_counter);	
 		top_of_p_stack <= p_stack_cell_mem(program_counter);
 	end process;

@@ -62,14 +62,18 @@ begin
 				valid_instruction <= '1';
 					case instruction is
 						when pf_nxt_1 =>					-- pf_nxt_1, a 1 byte sequential instruction
-								pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction							
-							if (instruction_duration = 0) then
-								state_n <= run_pipeline;	
-								countdown_n <= 0;
-							else 	 
-								state_n <= delay_pipeline;
-								countdown_n <= instruction_duration;
-							end if;
+								pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction	
+							case instruction_duration is
+								when 0 =>
+									state_n <= run_pipeline;	
+									countdown_n <= 0;		
+								when 1 =>
+									state_n <= restart_pipeline;	
+									countdown_n <= 0;													
+								when others => 	 
+									state_n <= delay_pipeline;
+									countdown_n <= instruction_duration - 2;
+							end case;
 						
 						when pf_nxt_2 =>			-- 2 byte sequential instructions
 							state_n <= restart_pipeline;
@@ -113,7 +117,7 @@ begin
 			
 			when delay_pipeline =>
 				valid_instruction <= '0';
-				if (countdown = 1) then 
+				if (countdown = 0) then 
 					countdown_n <= 0;
 					state_n <= restart_pipeline;
 				else
