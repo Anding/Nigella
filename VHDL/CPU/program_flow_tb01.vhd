@@ -17,6 +17,7 @@ signal rst : std_logic := '1';
 signal program_counter : program_counter_type;
 signal instruction : instruction_type := pf_nxt_1;
 signal instruction_literal : instruction_literal_type := 0;
+signal instruction_duration : instruction_duration_type := 0;
 signal valid_instruction : std_logic;
 signal equal_zero : std_logic := '0';
 signal top_of_p_stack : program_counter_type := 0;
@@ -53,6 +54,7 @@ begin
 		program_counter => program_counter,
 		instruction => instruction,
 		instruction_literal => instruction_literal,
+		instruction_duration => instruction_duration,
 		valid_instruction => valid_instruction,
 		equal_zero => equal_zero,
 		top_of_p_stack => top_of_p_stack,
@@ -77,9 +79,9 @@ begin
 		wait until rising_edge(clk);
 			if (test_ended) then
 				-- either save or verify
-					tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-				--	tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-				--	tb_rec.verify_recording_to_reference;
+				--	tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+					tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+					tb_rec.verify_recording_to_reference;
 			else
 				tb_rec.make_record(
 					"rst = " & to_string(rst) & ", " &
