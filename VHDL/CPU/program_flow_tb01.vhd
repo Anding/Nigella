@@ -25,6 +25,9 @@ signal top_of_p_stack : program_counter_type := 0;
 signal top_of_s_stack : program_counter_type := 0;
 signal push_s_stack : std_logic;
 signal pop_s_stack : std_logic;
+signal req_sleep : std_logic := '0';
+signal req_wake : std_logic := '0';
+signal acq_sleep : std_logic;
 
 signal test_ended : boolean := false;
 signal test_ok : boolean := false;
@@ -63,6 +66,9 @@ begin
 		validfor_execution => validfor_execution,
 		equal_zero => equal_zero,
 		top_of_p_stack => top_of_p_stack,
+		req_sleep => req_sleep,
+		req_wake => req_wake,
+		acq_sleep => acq_sleep,
 		top_of_s_stack => top_of_s_stack,
 		push_s_stack => push_s_stack,
 		pop_s_stack => pop_s_stack

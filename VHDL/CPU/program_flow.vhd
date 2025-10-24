@@ -21,6 +21,10 @@ entity program_flow is
 		-- datapath inspection
 		equal_zero : in std_logic;											-- conditional flag of parameter stack
 		top_of_p_stack : in program_counter_type;						-- parameter stack 
+		-- multi tasking
+		req_sleep : in std_logic;
+		req_wake : in std_logic;		
+		acq_sleep : out std_logic;
 		-- subroutine stack access and control
 		top_of_s_stack : in program_counter_type;						-- subroutine stack
 		push_s_stack : out std_logic;
@@ -31,7 +35,7 @@ end entity;
 	
 architecture rtl of program_flow is
 	
-type state_type is ( run_pipeline, restart_pipeline, delay_pipeline);
+type state_type is ( run_pipeline, restart_pipeline, delay_pipeline, sleep);
 signal state, state_n : state_type := restart_pipeline;
 signal pc, pc_n : program_counter_type := 0;
 signal countdown, countdown_n : instruction_duration_type := 0;
@@ -65,10 +69,16 @@ begin
 						when pf_nxt_1 =>					-- pf_nxt_1, a 1 byte sequential instruction
 							case instruction_duration is
 								when 0 =>
-									state_n <= run_pipeline;	
-									countdown_n <= 0;		
-									validfor_read <= '1';
-									pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction		
+									countdown_n <= 0;										
+									if (req_sleep = '0') then
+										state_n <= run_pipeline;	
+										validfor_read <= '1';
+										pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction		
+									else 
+										state_n <= sleep;
+										validfor_read <= '0';
+										pc_n <= pc;				
+									end if;							
 								when 1 =>
 									state_n <= restart_pipeline;	
 									countdown_n <= 0;		
@@ -139,15 +149,30 @@ begin
 					state_n <= delay_pipeline;			
 				end if;
 				validfor_read <= '0';
-
+				
+			when sleep =>
+				validfor_execution <= '0';
+				validfor_read <= '0';
+				countdown_n <= 0;	
+				pc_n <= pc;									
+				if (req_wake = '0') then
+					state_n <= sleep;
+				else 
+					state_n <= restart_pipeline;		
+				end if;					
 									
 			when others =>						-- restart_pipeline
 				validfor_execution <= '0';
-				countdown_n <= 0;
-				state_n <= run_pipeline;	-- on the last clock latch the PC was 'caught up', after this clock cycle it will have read the next instruction from memory
-				validfor_read <= '1';
-				pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction	
-	
+				countdown_n <= 0;				
+				if (req_sleep = '0') then
+					state_n <= run_pipeline;	-- on the last clock latch the PC was 'caught up', after this clock cycle it will have read the next instruction from memory	
+					validfor_read <= '1';
+					pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction		
+				else 
+					state_n <= sleep;
+					validfor_read <= '0';
+					pc_n <= pc;				
+				end if;			
 		end case;
 	end process;
 
