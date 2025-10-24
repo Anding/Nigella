@@ -12,11 +12,12 @@ entity program_flow is
 		rst : in std_logic;
 		-- program memory
 		program_counter : out program_counter_type;
+		validfor_read : out std_logic;
 		-- instruction decoding
 		instruction : in instruction_type;
 		instruction_literal : in instruction_literal_type;			-- branch offset / jump literal
 		instruction_duration : in instruction_duration_type;		-- no. of additional cycles. 0 for a single-cycle instruction
-		valid_instruction : out std_logic;
+		validfor_execution : out std_logic;
 		-- datapath inspection
 		equal_zero : in std_logic;											-- conditional flag of parameter stack
 		top_of_p_stack : in program_counter_type;						-- parameter stack 
@@ -59,45 +60,55 @@ begin
 		
 		case state is	
 			when run_pipeline =>
-				valid_instruction <= '1';
+				validfor_execution <= '1';
 					case instruction is
 						when pf_nxt_1 =>					-- pf_nxt_1, a 1 byte sequential instruction
-								pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction	
 							case instruction_duration is
 								when 0 =>
 									state_n <= run_pipeline;	
 									countdown_n <= 0;		
+									validfor_read <= '1';
+									pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction		
 								when 1 =>
 									state_n <= restart_pipeline;	
-									countdown_n <= 0;													
+									countdown_n <= 0;		
+									validfor_read <= '0';
+									pc_n <= pc;											
 								when others => 	 
 									state_n <= delay_pipeline;
 									countdown_n <= instruction_duration - 2;
+									validfor_read <= '0';
+									pc_n <= pc;
 							end case;
 						
 						when pf_nxt_2 =>			-- 2 byte sequential instructions
 							state_n <= restart_pipeline;
 							countdown_n <= 0;
+							validfor_read <= '0';
 							pc_n <= pc + 1;				-- the prior instruction length assumption was wrong!  Correct the PC and restart the pipeline
 	
 						when pf_nxt_3 =>			-- 3 byte sequential instructions
 							state_n <= restart_pipeline;
 							countdown_n <= 0;
+							validfor_read <= '0';
 							pc_n <= pc + 2;
 												
 						when pf_nxt_5 =>			-- 5 byte sequential instructions
 							state_n <= restart_pipeline;
 							countdown_n <= 0;
+							validfor_read <= '0';
 							pc_n <= pc + 4;
 						
 						when pf_bra =>				-- branch, the offset is calculated from the second byte (i.e. -1 for an indefinite loop)
 							state_n <= restart_pipeline;
 							countdown_n <= 0;
+							validfor_read <= '0';
 							pc_n <= pc + instruction_literal;
 	
 						when pf_beq =>				-- conditional branch
 							state_n <= restart_pipeline;
 							countdown_n <= 0;
+							validfor_read <= '0';
 							if (equal_zero = '1') then
 								pc_n <= pc + instruction_literal;
 							else
@@ -107,29 +118,34 @@ begin
 						when pf_jmp =>				-- jump to the address on the stack
 							state_n <= restart_pipeline;
 							countdown_n <= 0;
+							validfor_read <= '0';
 							pc_n <= top_of_p_stack;
 						
 						when others =>				-- pf_nxt_1, a 1 byte sequential instruction
 							state_n <= run_pipeline;	-- the prior instruction length assumption was correct!  Continue execution
 							countdown_n <= 0;
+							validfor_read <= '0';
 							pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction	
 					end case;
 			
 			when delay_pipeline =>
-				valid_instruction <= '0';
+				validfor_execution <= '0';
+				pc_n <= pc;					
 				if (countdown = 0) then 
 					countdown_n <= 0;
-					state_n <= restart_pipeline;
+					state_n <= restart_pipeline;			
 				else
 					countdown_n <= countdown - 1;
-					state_n <= delay_pipeline;
+					state_n <= delay_pipeline;			
 				end if;
-				pc_n <= pc;
+				validfor_read <= '0';
+
 									
 			when others =>						-- restart_pipeline
-				valid_instruction <= '0';
+				validfor_execution <= '0';
 				countdown_n <= 0;
 				state_n <= run_pipeline;	-- on the last clock latch the PC was 'caught up', after this clock cycle it will have read the next instruction from memory
+				validfor_read <= '1';
 				pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction	
 	
 		end case;

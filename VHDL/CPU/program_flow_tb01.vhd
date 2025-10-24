@@ -18,7 +18,8 @@ signal program_counter : program_counter_type;
 signal instruction : instruction_type := pf_nxt_1;
 signal instruction_literal : instruction_literal_type := 0;
 signal instruction_duration : instruction_duration_type := 0;
-signal valid_instruction : std_logic;
+signal validfor_execution : std_logic;
+signal validfor_read : std_logic;
 signal equal_zero : std_logic := '0';
 signal top_of_p_stack : program_counter_type := 0;
 signal top_of_s_stack : program_counter_type := 0;
@@ -32,21 +33,21 @@ shared variable tb_rec : testbench_recorder_protected ;
 
 -- example program flow data
 type instruction_mem_type is array (0 to 127) of instruction_type;
-signal instruction_mem : instruction_mem_type := (0 => pf_nxt_1, 1 => pf_nxt_1, 2 => pf_nxt_2, 
-		3 => pf_null, 4 => pf_nxt_2, 5 => pf_null, 6 => pf_bra, 7 => pf_null, 10 => pf_beq, 11 => pf_null, 
-		12 => pf_jmp, 17 => pf_beq, others => pf_nxt_1);
+signal instruction_mem : instruction_mem_type := 
+	(0 => pf_nxt_1, 1 => pf_nxt_1, 2 => pf_nxt_2, 
+		4 => pf_nxt_2, 6 => pf_bra, 10 => pf_beq, 12 => pf_jmp, 17 => pf_bra, others => pf_nxt_1);
 
 type instruction_literal_mem_type is array (0 to 127) of instruction_literal_type;
-signal instruction_literal_mem : instruction_literal_mem_type := (6 => 3, 10 => -1, 12 => -1, others => 0);
+signal instruction_literal_mem : instruction_literal_mem_type := (6 => 3, 10 => -1, 17 => -1, others => 0);
 	
 type instruction_duration_mem_type is array (0 to 127) of instruction_duration_type;
-signal instruction_duration_mem : instruction_duration_mem_type := (others => 0);
+signal instruction_duration_mem : instruction_duration_mem_type := (20 => 4, 21 => 1, others => 0);
 	
 type equal_zero_mem_type is array (0 to 127) of std_logic;
 signal equal_zero_mem : equal_zero_mem_type := (12 => '1', others => '0');
 
 type p_stack_cell_mem_type is array (0 to 127) of program_counter_type;
-signal p_stack_cell_mem : p_stack_cell_mem_type := (12 => 16, others => 0);
+signal p_stack_cell_mem : p_stack_cell_mem_type := (12 => 19, others => 0);
 	
 begin
 	
@@ -55,10 +56,11 @@ begin
 		clk => clk,
 		rst => rst,
 		program_counter => program_counter,
+		validfor_read => validfor_read,
 		instruction => instruction,
 		instruction_literal => instruction_literal,
 		instruction_duration => instruction_duration,
-		valid_instruction => valid_instruction,
+		validfor_execution => validfor_execution,
 		equal_zero => equal_zero,
 		top_of_p_stack => top_of_p_stack,
 		top_of_s_stack => top_of_s_stack,
@@ -90,7 +92,8 @@ begin
 				tb_rec.make_record(
 					"rst = " & to_string(rst) & ", " &
 					"PC = " & to_string(program_counter) & ", " &
-					"vld = " & to_string(valid_instruction)
+					"vld_exec = " & to_string(validfor_execution) & ", " &							
+					"vld_read = " & to_string(validfor_read)
 						);
 			end if;
 	end process;	
@@ -102,7 +105,7 @@ begin
 		
 		wait until rising_edge(clk);
 			
-		wait for 14 * clock_period;
+		wait for 24 * clock_period;
 		
 		test_ended <= true;	wait for clock_period;
 		-- save or verify the testbench recording

@@ -23,8 +23,8 @@ package types is
 			-- pf_cth, pf_thw
 			-- pf_pau
 			
-	subtype program_counter_type is integer range 0 to prog_mem_addr_top;
-	subtype instruction_literal_type is integer range -2**(p_stack_width - 1) to 2**(p_stack_width - 1) - 1;
+	subtype program_counter_type is integer ;
+	subtype instruction_literal_type is integer ;
 	subtype instruction_duration_type is integer range 0 to max_instruction_duration;
 		
 end package;
