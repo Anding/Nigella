@@ -33,8 +33,8 @@ architecture rtl of program_flow is
 	
 type state_type is ( run_pipeline, restart_pipeline, delay_pipeline);
 signal state, state_n : state_type := restart_pipeline;
-signal pc, pc_n : program_counter_type;
-signal countdown, countdown_n : instruction_duration_type;
+signal pc, pc_n : program_counter_type := 0;
+signal countdown, countdown_n : instruction_duration_type := 0;
 	
 begin
 	

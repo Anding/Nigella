@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="program_flow_tb01_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="constants" />
+            <top_module name="program_flow_tb01" />
+            <top_module name="testbench_recorder" />
+            <top_module name="types" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="10.590 ns"></ZoomStartTime>
+      <ZoomEndTime time="91.491 ns"></ZoomEndTime>
+      <Cursor1Time time="125.808 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="164"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="11" />
+   <wvobject fp_name="/program_flow_tb01/test_ok" type="other">
+      <obj_property name="ElementShortName">test_ok</obj_property>
+      <obj_property name="ObjectShortName">test_ok</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/program_counter" type="other">
+      <obj_property name="ElementShortName">program_counter</obj_property>
+      <obj_property name="ObjectShortName">program_counter</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/validfor_read" type="logic">
+      <obj_property name="ElementShortName">validfor_read</obj_property>
+      <obj_property name="ObjectShortName">validfor_read</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/instruction" type="other">
+      <obj_property name="ElementShortName">instruction</obj_property>
+      <obj_property name="ObjectShortName">instruction</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/validfor_execution" type="logic">
+      <obj_property name="ElementShortName">validfor_execution</obj_property>
+      <obj_property name="ObjectShortName">validfor_execution</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/DUT/instruction_literal" type="other">
+      <obj_property name="ElementShortName">instruction_literal</obj_property>
+      <obj_property name="ObjectShortName">instruction_literal</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/DUT/instruction_duration" type="other">
+      <obj_property name="ElementShortName">instruction_duration</obj_property>
+      <obj_property name="ObjectShortName">instruction_duration</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/DUT/state" type="other">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/DUT/countdown" type="other">
+      <obj_property name="ElementShortName">countdown</obj_property>
+      <obj_property name="ObjectShortName">countdown</obj_property>
+   </wvobject>
+</wave_config>

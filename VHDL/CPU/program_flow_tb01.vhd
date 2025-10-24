@@ -14,7 +14,7 @@ architecture sim of program_flow_tb01 is
 	
 signal clk : std_logic := '0';
 signal rst : std_logic := '1';
-signal program_counter : program_counter_type;
+signal program_counter : program_counter_type := 0;
 signal instruction : instruction_type := pf_nxt_1;
 signal instruction_literal : instruction_literal_type := 0;
 signal instruction_duration : instruction_duration_type := 0;
