@@ -1,40 +1,40 @@
-rst = 1, PC = 0, vld_exec = 0, vld_read = 1                                                                                     
-rst = 1, PC = 0, vld_exec = 0, vld_read = 1                                                                                     
-rst = 0, PC = 0, vld_exec = 0, vld_read = 1                                                                                     
-rst = 0, PC = 1, vld_exec = 1, vld_read = 1                                                                                     
-rst = 0, PC = 2, vld_exec = 1, vld_read = 1                                                                                     
-rst = 0, PC = 3, vld_exec = 1, vld_read = 0                                                                                     
-rst = 0, PC = 4, vld_exec = 0, vld_read = 1                                                                                     
-rst = 0, PC = 5, vld_exec = 1, vld_read = 0                                                                                     
-rst = 0, PC = 6, vld_exec = 0, vld_read = 1                                                                                     
-rst = 0, PC = 7, vld_exec = 1, vld_read = 0                                                                                     
-rst = 0, PC = 10, vld_exec = 0, vld_read = 1                                                                                    
-rst = 0, PC = 11, vld_exec = 1, vld_read = 0                                                                                    
-rst = 0, PC = 12, vld_exec = 0, vld_read = 1                                                                                    
-rst = 0, PC = 13, vld_exec = 1, vld_read = 0                                                                                    
-rst = 0, PC = 19, vld_exec = 0, vld_read = 1                                                                                    
-rst = 0, PC = 20, vld_exec = 1, vld_read = 1                                                                                    
-rst = 0, PC = 21, vld_exec = 1, vld_read = 0                                                                                    
-rst = 0, PC = 21, vld_exec = 0, vld_read = 0                                                                                    
-rst = 0, PC = 21, vld_exec = 0, vld_read = 0                                                                                    
-rst = 0, PC = 21, vld_exec = 0, vld_read = 0                                                                                    
-rst = 0, PC = 21, vld_exec = 0, vld_read = 1                                                                                    
-rst = 0, PC = 22, vld_exec = 1, vld_read = 0                                                                                    
-rst = 0, PC = 22, vld_exec = 0, vld_read = 1                                                                                    
-rst = 0, PC = 23, vld_exec = 1, vld_read = 1                                                                                    
-rst = 0, PC = 24, vld_exec = 1, vld_read = 1                                                                                    
-rst = 0, PC = 25, vld_exec = 1, vld_read = 1                                                                                    
-rst = 0, PC = 26, vld_exec = 1, vld_read = 1                                                                                    
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
+rst = 1, PC = 0, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                       
+rst = 1, PC = 0, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                       
+rst = 0, PC = 0, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                       
+rst = 0, PC = 1, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                       
+rst = 0, PC = 2, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                       
+rst = 0, PC = 3, vld_exec = 1, vld_read = 0, acq_slep = 0                                                                       
+rst = 0, PC = 4, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                       
+rst = 0, PC = 5, vld_exec = 1, vld_read = 0, acq_slep = 0                                                                       
+rst = 0, PC = 6, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                       
+rst = 0, PC = 7, vld_exec = 1, vld_read = 0, acq_slep = 0                                                                       
+rst = 0, PC = 10, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 11, vld_exec = 1, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 12, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 13, vld_exec = 1, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 19, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 20, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 21, vld_exec = 1, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 21, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 21, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 21, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 21, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 22, vld_exec = 1, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 22, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 23, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 24, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 25, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 26, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 27, vld_exec = 1, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 27, vld_exec = 0, vld_read = 0, acq_slep = 1                                                                      
+rst = 0, PC = 27, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 27, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 27, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 27, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 27, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 28, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 29, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 30, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
                                                                                                                                 
                                                                                                                                 
                                                                                                                                 

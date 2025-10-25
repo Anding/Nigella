@@ -12,6 +12,8 @@ end entity;
 	
 architecture sim of program_flow_tb01 is
 	
+constant mem_depth : integer := 127;
+	
 signal clk : std_logic := '0';
 signal rst : std_logic := '1';
 signal program_counter : program_counter_type := 0;
@@ -35,21 +37,21 @@ signal test_ok : boolean := false;
 shared variable tb_rec : testbench_recorder_protected ;
 
 -- example program flow data
-type instruction_mem_type is array (0 to 127) of instruction_type;
+type instruction_mem_type is array (0 to mem_depth) of instruction_type;
 signal instruction_mem : instruction_mem_type := 
 	(0 => pf_nxt_1, 1 => pf_nxt_1, 2 => pf_nxt_2, 
 		4 => pf_nxt_2, 6 => pf_bra, 10 => pf_beq, 12 => pf_jmp, 17 => pf_bra, others => pf_nxt_1);
 
-type instruction_literal_mem_type is array (0 to 127) of instruction_literal_type;
+type instruction_literal_mem_type is array (0 to mem_depth) of instruction_literal_type;
 signal instruction_literal_mem : instruction_literal_mem_type := (6 => 3, 10 => -1, 17 => -1, others => 0);
 	
-type instruction_duration_mem_type is array (0 to 127) of instruction_duration_type;
+type instruction_duration_mem_type is array (0 to mem_depth) of instruction_duration_type;
 signal instruction_duration_mem : instruction_duration_mem_type := (20 => 4, 21 => 1, others => 0);
 	
-type equal_zero_mem_type is array (0 to 127) of std_logic;
+type equal_zero_mem_type is array (0 to mem_depth) of std_logic;
 signal equal_zero_mem : equal_zero_mem_type := (12 => '1', others => '0');
 
-type p_stack_cell_mem_type is array (0 to 127) of program_counter_type;
+type p_stack_cell_mem_type is array (0 to mem_depth) of program_counter_type;
 signal p_stack_cell_mem : p_stack_cell_mem_type := (12 => 19, others => 0);
 	
 begin
@@ -84,6 +86,7 @@ begin
 		instruction_duration <= instruction_duration_mem(program_counter);				
 		equal_zero <= equal_zero_mem(program_counter);	
 		top_of_p_stack <= p_stack_cell_mem(program_counter);
+			
 	end process;
 	
 	recorder: process is
@@ -91,15 +94,16 @@ begin
 		wait until rising_edge(clk);
 			if (test_ended) then
 				-- either save or verify
-				--	tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-					tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-					tb_rec.verify_recording_to_reference;
+					tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+				--	tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+				--	tb_rec.verify_recording_to_reference;
 			else
 				tb_rec.make_record(
 					"rst = " & to_string(rst) & ", " &
 					"PC = " & to_string(program_counter) & ", " &
 					"vld_exec = " & to_string(validfor_execution) & ", " &							
-					"vld_read = " & to_string(validfor_read)
+					"vld_read = " & to_string(validfor_read)  & ", " &
+					"acq_slep = " & to_string(acq_sleep) 
 						);
 			end if;
 	end process;	
@@ -112,6 +116,14 @@ begin
 		wait until rising_edge(clk);
 			
 		wait for 24 * clock_period;
+		req_sleep <= '1'; wait for clock_period;
+		req_sleep <= '0';
+		
+		wait for 4 * clock_period;
+		req_wake <= '1'; wait for clock_period;
+		req_wake <= '0';
+		
+		wait for 4 * clock_period;		
 		
 		test_ended <= true;	wait for clock_period;
 		-- save or verify the testbench recording

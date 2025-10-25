@@ -13,15 +13,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="10.590 ns"></ZoomStartTime>
-      <ZoomEndTime time="91.491 ns"></ZoomEndTime>
-      <Cursor1Time time="125.808 ns"></Cursor1Time>
+      <ZoomStartTime time="275.294 ns"></ZoomStartTime>
+      <ZoomEndTime time="382.942 ns"></ZoomEndTime>
+      <Cursor1Time time="365.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="164"></NameColumnWidth>
+      <NameColumnWidth column_width="160"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="11" />
+   <WVObjectSize size="14" />
    <wvobject fp_name="/program_flow_tb01/test_ok" type="other">
       <obj_property name="ElementShortName">test_ok</obj_property>
       <obj_property name="ObjectShortName">test_ok</obj_property>
@@ -65,5 +65,17 @@
    <wvobject fp_name="/program_flow_tb01/DUT/countdown" type="other">
       <obj_property name="ElementShortName">countdown</obj_property>
       <obj_property name="ObjectShortName">countdown</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/req_sleep" type="logic">
+      <obj_property name="ElementShortName">req_sleep</obj_property>
+      <obj_property name="ObjectShortName">req_sleep</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/req_wake" type="logic">
+      <obj_property name="ElementShortName">req_wake</obj_property>
+      <obj_property name="ObjectShortName">req_wake</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb01/acq_sleep" type="logic">
+      <obj_property name="ElementShortName">acq_sleep</obj_property>
+      <obj_property name="ObjectShortName">acq_sleep</obj_property>
    </wvobject>
 </wave_config>

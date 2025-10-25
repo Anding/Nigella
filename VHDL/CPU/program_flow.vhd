@@ -39,6 +39,7 @@ type state_type is ( run_pipeline, restart_pipeline, delay_pipeline, sleep);
 signal state, state_n : state_type := restart_pipeline;
 signal pc, pc_n : program_counter_type := 0;
 signal countdown, countdown_n : instruction_duration_type := 0;
+signal sleep_signal, sleep_signal_n : std_logic := '0';
 	
 begin
 	
@@ -52,10 +53,13 @@ begin
 		if rst = '1' then
 			state <= restart_pipeline;
 			pc <= 0;
+			countdown <= 0;
+			sleep_signal <= '0';			
 		else
 			state <= state_n;
 			pc <= pc_n;
 			countdown <= countdown_n;
+			sleep_signal <= sleep_signal_n;
 		end if;
 	end process;
 	
@@ -65,6 +69,8 @@ begin
 		case state is	
 			when run_pipeline =>
 				validfor_execution <= '1';
+				acq_sleep <= '0';		
+				sleep_signal_n <= '0';		
 					case instruction is
 						when pf_nxt_1 =>					-- pf_nxt_1, a 1 byte sequential instruction
 							case instruction_duration is
@@ -140,6 +146,7 @@ begin
 			
 			when delay_pipeline =>
 				validfor_execution <= '0';
+				sleep_signal_n <= '0';	
 				pc_n <= pc;					
 				if (countdown = 0) then 
 					countdown_n <= 0;
@@ -148,13 +155,19 @@ begin
 					countdown_n <= countdown - 1;
 					state_n <= delay_pipeline;			
 				end if;
+				acq_sleep <= '0';
 				validfor_read <= '0';
 				
 			when sleep =>
 				validfor_execution <= '0';
 				validfor_read <= '0';
-				countdown_n <= 0;	
-				pc_n <= pc;									
+				sleep_signal_n <= '1';	
+				pc_n <= pc;			
+				if (sleep_signal = '0') then
+					acq_sleep <= '1';
+				else 				
+					acq_sleep <= '0';
+				end if;									
 				if (req_wake = '0') then
 					state_n <= sleep;
 				else 
@@ -163,13 +176,16 @@ begin
 									
 			when others =>						-- restart_pipeline
 				validfor_execution <= '0';
-				countdown_n <= 0;				
+				countdown_n <= 0;	
+				sleep_signal_n <= '0';			
 				if (req_sleep = '0') then
 					state_n <= run_pipeline;	-- on the last clock latch the PC was 'caught up', after this clock cycle it will have read the next instruction from memory	
+					acq_sleep <= '0';
 					validfor_read <= '1';
 					pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction		
 				else 
 					state_n <= sleep;
+					acq_sleep <= '1';
 					validfor_read <= '0';
 					pc_n <= pc;				
 				end if;			
