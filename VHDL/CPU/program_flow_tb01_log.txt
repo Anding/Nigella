@@ -35,15 +35,15 @@ rst = 0, PC = 27, vld_exec = 0, vld_read = 1, acq_slep = 0
 rst = 0, PC = 28, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
 rst = 0, PC = 29, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
 rst = 0, PC = 30, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
-                                                                                                                                
+rst = 0, PC = 31, vld_exec = 1, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 31, vld_exec = 0, vld_read = 0, acq_slep = 1                                                                      
+rst = 0, PC = 31, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 31, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 31, vld_exec = 0, vld_read = 0, acq_slep = 0                                                                      
+rst = 0, PC = 31, vld_exec = 0, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 32, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 33, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
+rst = 0, PC = 34, vld_exec = 1, vld_read = 1, acq_slep = 0                                                                      
                                                                                                                                 
                                                                                                                                 
                                                                                                                                 

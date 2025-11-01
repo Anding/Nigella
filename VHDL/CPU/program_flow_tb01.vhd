@@ -40,7 +40,7 @@ shared variable tb_rec : testbench_recorder_protected ;
 type instruction_mem_type is array (0 to mem_depth) of instruction_type;
 signal instruction_mem : instruction_mem_type := 
 	(0 => pf_nxt_1, 1 => pf_nxt_1, 2 => pf_nxt_2, 
-		4 => pf_nxt_2, 6 => pf_bra, 10 => pf_beq, 12 => pf_jmp, 17 => pf_bra, others => pf_nxt_1);
+		4 => pf_nxt_2, 6 => pf_bra, 10 => pf_beq, 12 => pf_jmp, 17 => pf_bra, 30 => pf_slp, others => pf_nxt_1);
 
 type instruction_literal_mem_type is array (0 to mem_depth) of instruction_literal_type;
 signal instruction_literal_mem : instruction_literal_mem_type := (6 => 3, 10 => -1, 17 => -1, others => 0);
@@ -94,9 +94,9 @@ begin
 		wait until rising_edge(clk);
 			if (test_ended) then
 				-- either save or verify
-					tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-				--	tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-				--	tb_rec.verify_recording_to_reference;
+				--	tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+					tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
+				   tb_rec.verify_recording_to_reference;
 			else
 				tb_rec.make_record(
 					"rst = " & to_string(rst) & ", " &
@@ -120,6 +120,10 @@ begin
 		req_sleep <= '0';
 		
 		wait for 4 * clock_period;
+		req_wake <= '1'; wait for clock_period;
+		req_wake <= '0';
+		
+		wait for 8 * clock_period;
 		req_wake <= '1'; wait for clock_period;
 		req_wake <= '0';
 		

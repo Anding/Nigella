@@ -136,6 +136,12 @@ begin
 							countdown_n <= 0;
 							validfor_read <= '0';
 							pc_n <= top_of_p_stack;
+							
+						when pf_slp =>				-- sleep until woken by req_wake
+							state_n <= sleep;
+							countdown_n <= 0;
+							validfor_read <= '0';
+							pc_n <= pc;							
 						
 						when others =>				-- pf_nxt_1, a 1 byte sequential instruction
 							state_n <= run_pipeline;	-- the prior instruction length assumption was correct!  Continue execution
