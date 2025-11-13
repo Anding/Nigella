@@ -26,6 +26,8 @@ package types is
 	subtype program_counter_type is integer ;
 	subtype instruction_literal_type is integer ;
 	subtype instruction_duration_type is integer range 0 to max_instruction_duration;
+	
+	type stack_op_type is ( op_nop, op_psh, op_pop, op_rpl);
 		
 end package;
 		
