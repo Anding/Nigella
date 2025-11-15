@@ -12,7 +12,7 @@ end entity;
 	
 architecture sim of simple_stack_tb01 is
 constant width : integer := 32;
-constant addr_width : integer := 16;
+constant addr_width : integer := 8;
 constant base_address : integer := 0;
 
 signal test_ended : boolean := false;
@@ -22,12 +22,13 @@ signal clk : std_logic := '0';
 signal rst : std_logic := '1';
 signal stack_op : stack_op_type := op_nop;
 signal stack_cell_1 : std_logic_vector(width - 1 downto 0);
+signal stack_cell_2 : std_logic_vector(width - 1 downto 0);
 signal new_cell_1 : std_logic_vector(width - 1 downto 0) := (others => '0');
 signal mem_addr : std_logic_vector (addr_width - 1 downto 0) := (others => '0');
 signal mem_data_to_RAM : std_logic_vector(width - 1 downto 0) := (others => '0');	
 signal mem_data_from_RAM : std_logic_vector(width - 1 downto 0) := (others => '0');
 signal mem_we : std_logic :='0';
-
+	
 shared variable tb_rec : testbench_recorder_protected ;
 
 type stack_mem_type is array (0 to 2**addr_width - 1 ) of std_logic_vector(width - 1 downto 0);	
@@ -46,6 +47,7 @@ begin
 		rst => rst,
 		stack_op => stack_op,
 		stack_cell_1 => stack_cell_1,
+		stack_cell_2 => stack_cell_2,		
 		new_cell_1 => new_cell_1,
 		mem_addr => mem_addr,
 		mem_data_to_RAM => mem_data_to_RAM,
@@ -60,9 +62,9 @@ begin
 		wait until rising_edge(clk);
 			if (test_ended) then
 				-- either save or verify
-				 	tb_rec.save_recording("E:\coding\Nigella\VHDL\Stacks\simple_stack_tb01_log.txt");
-				--	tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\Stacks\simple_stack_tb01_log.txt");
-				-- tb_rec.verify_recording_to_reference;
+				-- tb_rec.save_recording("E:\coding\Nigella\VHDL\Stacks\simple_stack_tb01_log.txt");
+					tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\Stacks\simple_stack_tb01_log.txt");
+				   tb_rec.verify_recording_to_reference;
 			else
 				tb_rec.make_record(
 					"rst = " & to_string(rst) & ", " &
@@ -76,14 +78,16 @@ begin
 	memory: process is
 	variable sp : integer;
 	begin
-		sp := to_integer(unsigned(mem_addr));
 		wait until rising_edge(clk);
-			mem_data_from_RAM <= stack_mem(sp);	
-			if mem_we = '1' then
+		sp := to_integer(unsigned(mem_addr));				
+			if mem_we = '1' then									
 				stack_mem(sp) <= mem_data_to_RAM;
+				mem_data_from_RAM <= mem_data_to_RAM;		-- write before read RAM				
 			else
 				stack_mem(sp) <= stack_mem(sp);
+				mem_data_from_RAM <= stack_mem(sp);						
 			end if;
+				
 	end process;
 	
 	
@@ -100,16 +104,24 @@ begin
 		new_cell_1 <= x"00005678";
 		stack_op <= op_psh;
 		wait for clock_period;
-		
-		new_cell_1 <= x"00000000";
-		stack_op <= op_pop;	
-		wait for clock_period;
-		
-		new_cell_1 <= x"00000000";
-		stack_op <= op_pop;	
-		wait for clock_period;
-		
+
 		new_cell_1 <= x"00009ABC";
+		stack_op <= op_psh;
+		wait for clock_period;
+		
+		new_cell_1 <= x"00000000";
+		stack_op <= op_pop;	
+		wait for clock_period;
+		
+		new_cell_1 <= x"00000000";
+		stack_op <= op_pop;	
+		wait for clock_period;
+		
+		new_cell_1 <= x"0000DEF0";
+		stack_op <= op_psh;
+		wait for clock_period;
+		
+		new_cell_1 <= x"12340000";
 		stack_op <= op_rpl;
 		wait for clock_period;		
 				

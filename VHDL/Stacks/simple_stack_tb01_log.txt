@@ -1,18 +1,18 @@
-rst = 1, stack_cell_1 = UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU, mem_addr = 0000000000000000, mem_we = U                               
-rst = 1, stack_cell_1 = 00000000000000000000000000000000, mem_addr = 0000000000000000, mem_we = 0                               
-rst = 0, stack_cell_1 = 00000000000000000000000000000000, mem_addr = 0000000000000000, mem_we = 0                               
-rst = 0, stack_cell_1 = 00000000000000000000000000000000, mem_addr = 0000000000000000, mem_we = 0                               
-rst = 0, stack_cell_1 = 00000000000000000001001000110100, mem_addr = 0000000000000001, mem_we = 1                               
-rst = 0, stack_cell_1 = 00000000000000000101011001111000, mem_addr = 0000000000000010, mem_we = 1                               
-rst = 0, stack_cell_1 = 00000000000000000000000000000000, mem_addr = 0000000000000001, mem_we = 0                               
-rst = 0, stack_cell_1 = 00000000000000000000000000000000, mem_addr = 0000000000000000, mem_we = 0                               
-rst = 0, stack_cell_1 = 00000000000000001001101010111100, mem_addr = 0000000000000000, mem_we = 0                               
-rst = 0, stack_cell_1 = 00000000000000001001101010111100, mem_addr = 0000000000000000, mem_we = 0                               
-rst = 0, stack_cell_1 = 00000000000000001001101010111100, mem_addr = 0000000000000000, mem_we = 0                               
-rst = 0, stack_cell_1 = 00000000000000001001101010111100, mem_addr = 0000000000000000, mem_we = 0                               
-rst = 0, stack_cell_1 = 00000000000000001001101010111100, mem_addr = 0000000000000000, mem_we = 0                               
-                                                                                                                                
-                                                                                                                                
+rst = 1, stack_cell_1 = UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU, mem_addr = 00000000, mem_we = 0                                       
+rst = 1, stack_cell_1 = 00000000000000000000000000000000, mem_addr = 11111110, mem_we = 0                                       
+rst = 0, stack_cell_1 = 00000000000000000000000000000000, mem_addr = 11111110, mem_we = 0                                       
+rst = 0, stack_cell_1 = 00000000000000000000000000000000, mem_addr = 11111111, mem_we = 1                                       
+rst = 0, stack_cell_1 = 00000000000000000001001000110100, mem_addr = 00000000, mem_we = 1                                       
+rst = 0, stack_cell_1 = 00000000000000000101011001111000, mem_addr = 00000001, mem_we = 1                                       
+rst = 0, stack_cell_1 = 00000000000000001001101010111100, mem_addr = 00000000, mem_we = 0                                       
+rst = 0, stack_cell_1 = 00000000000000000101011001111000, mem_addr = 11111111, mem_we = 0                                       
+rst = 0, stack_cell_1 = 00000000000000000001001000110100, mem_addr = 00000000, mem_we = 1                                       
+rst = 0, stack_cell_1 = 00000000000000001101111011110000, mem_addr = 00000000, mem_we = 0                                       
+rst = 0, stack_cell_1 = 00010010001101000000000000000000, mem_addr = 00000000, mem_we = 0                                       
+rst = 0, stack_cell_1 = 00010010001101000000000000000000, mem_addr = 00000000, mem_we = 0                                       
+rst = 0, stack_cell_1 = 00010010001101000000000000000000, mem_addr = 00000000, mem_we = 0                                       
+rst = 0, stack_cell_1 = 00010010001101000000000000000000, mem_addr = 00000000, mem_we = 0                                       
+rst = 0, stack_cell_1 = 00010010001101000000000000000000, mem_addr = 00000000, mem_we = 0                                       
                                                                                                                                 
                                                                                                                                 
                                                                                                                                 
