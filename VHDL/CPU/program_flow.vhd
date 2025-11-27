@@ -26,9 +26,7 @@ entity program_flow is
 		req_wake : in std_logic;		
 		acq_sleep : out std_logic;
 		-- subroutine stack access and control
-		top_of_s_stack : in program_counter_type;						-- subroutine stack
-		push_s_stack : out std_logic;
-		pop_s_stack : out std_logic
+		top_of_s_stack : in program_counter_type						-- subroutine stack
 	);
 	
 end entity;
@@ -44,8 +42,6 @@ signal sleep_signal, sleep_signal_n : std_logic := '0';
 begin
 	
 	program_counter <= pc;
-	push_s_stack <= '0';
-	pop_s_stack <= '0';
 	
 	fsm_registers: process is
 	begin
@@ -137,17 +133,30 @@ begin
 							validfor_read <= '0';
 							pc_n <= top_of_p_stack;
 							
-						when pf_slp =>				-- sleep until woken by req_wake
+						when pf_jsr =>				-- jump to a subroutine address on the stack
+							state_n <= restart_pipeline;
+							countdown_n <= 0;
+							validfor_read <= '0';
+							pc_n <= top_of_p_stack;
+							
+						when pf_jsl =>				-- jump to a literal subroutine address
+							state_n <= restart_pipeline;
+							countdown_n <= 0;
+							validfor_read <= '0';
+							pc_n <= instruction_literal;														
+
+						when pf_rts =>				-- jump to a literal subroutine address
+							state_n <= restart_pipeline;
+							countdown_n <= 0;
+							validfor_read <= '0';
+							pc_n <= top_of_s_stack;	
+							
+						when others =>	--pf_slp	 -- sleep until woken by req_wake
 							state_n <= sleep;
 							countdown_n <= 0;
 							validfor_read <= '0';
 							pc_n <= pc;							
 						
-						when others =>				-- pf_nxt_1, a 1 byte sequential instruction
-							state_n <= run_pipeline;	-- the prior instruction length assumption was correct!  Continue execution
-							countdown_n <= 0;
-							validfor_read <= '0';
-							pc_n <= pc + 1;				-- the pipeline ASSUMES that the next instruction will be a one cycle instruction	
 					end case;
 			
 			when delay_pipeline =>

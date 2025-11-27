@@ -7,10 +7,10 @@ use work.constants.all;
 use work.types.all;
 use work.testbench_recorder.all;
 
-entity program_flow_tb01 is
+entity program_flow_tb02 is
 end entity;
 	
-architecture sim of program_flow_tb01 is
+architecture sim of program_flow_tb02 is
 	
 constant mem_depth : integer := 127;
 	
@@ -37,20 +37,22 @@ shared variable tb_rec : testbench_recorder_protected ;
 -- example program flow data
 type instruction_mem_type is array (0 to mem_depth) of instruction_type;
 signal instruction_mem : instruction_mem_type := 
-	(0 => pf_nxt_1, 1 => pf_nxt_1, 2 => pf_nxt_2, 
-		4 => pf_nxt_2, 6 => pf_bra, 10 => pf_beq, 12 => pf_jmp, 17 => pf_bra, 30 => pf_slp, others => pf_nxt_1);
+	(others => pf_nxt_1);
 
 type instruction_literal_mem_type is array (0 to mem_depth) of instruction_literal_type;
-signal instruction_literal_mem : instruction_literal_mem_type := (6 => 3, 10 => -1, 17 => -1, others => 0);
+signal instruction_literal_mem : instruction_literal_mem_type := (others => 0);
 	
 type instruction_duration_mem_type is array (0 to mem_depth) of instruction_duration_type;
-signal instruction_duration_mem : instruction_duration_mem_type := (20 => 4, 21 => 1, others => 0);
+signal instruction_duration_mem : instruction_duration_mem_type := (others => 0);
 	
 type equal_zero_mem_type is array (0 to mem_depth) of std_logic;
-signal equal_zero_mem : equal_zero_mem_type := (12 => '1', others => '0');
+signal equal_zero_mem : equal_zero_mem_type := (others => '0');
 
 type p_stack_cell_mem_type is array (0 to mem_depth) of program_counter_type;
-signal p_stack_cell_mem : p_stack_cell_mem_type := (12 => 19, others => 0);
+signal p_stack_cell_mem : p_stack_cell_mem_type := (others => 0);
+	
+type s_stack_cell_mem_type is array (0 to mem_depth) of program_counter_type;
+signal s_stack_cell_mem : s_stack_cell_mem_type := (others => 0);
 	
 begin
 	
@@ -90,9 +92,9 @@ begin
 		wait until rising_edge(clk);
 			if (test_ended) then
 				-- either save or verify
-				--	tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-					tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb01_log.txt");
-				   tb_rec.verify_recording_to_reference;
+					tb_rec.save_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb02_log.txt");
+				-- tb_rec.load_reference_recording("E:\coding\Nigella\VHDL\CPU\program_flow_tb02_log.txt");
+				-- tb_rec.verify_recording_to_reference;
 			else
 				tb_rec.make_record(
 					"rst = " & to_string(rst) & ", " &
@@ -111,17 +113,7 @@ begin
 		
 		wait until rising_edge(clk);
 			
-		wait for 24 * clock_period;
-		req_sleep <= '1'; wait for clock_period;
-		req_sleep <= '0';
-		
-		wait for 4 * clock_period;
-		req_wake <= '1'; wait for clock_period;
-		req_wake <= '0';
-		
-		wait for 8 * clock_period;
-		req_wake <= '1'; wait for clock_period;
-		req_wake <= '0';
+		wait for 36 * clock_period;
 		
 		wait for 4 * clock_period;		
 		

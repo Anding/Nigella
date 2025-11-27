@@ -19,9 +19,6 @@ package types is
 										pf_nxt_3, -- sequential instruction width 3 bytes (opcode + word literal)
 										pf_nxt_5, -- sequential instruction width 5 bytes (opcode + longword literal)
 										pf_bra, pf_beq, pf_rts, pf_jmp, pf_jsl, pf_jsr, pf_slp );
-			-- pf_rti
-			-- pf_cth, pf_thw
-			-- pf_pau
 			
 	subtype program_counter_type is integer ;
 	subtype instruction_literal_type is integer ;
