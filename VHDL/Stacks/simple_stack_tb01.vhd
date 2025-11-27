@@ -1,3 +1,11 @@
+-- create a new package out of the generic package
+package simple_stack_tb01_RAM is new work.RAM_for_testbench
+  generic map (
+    DATA_WIDTH => 32,
+    ADDR_WIDTH => 8
+  );
+  
+-- need to place (or repeat) library and use after package definition
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -5,14 +13,13 @@ use ieee.numeric_std.all;
 library work;
 use work.constants.all;
 use work.types.all;
-use work.testbench_recorder.all;
 
 entity simple_stack_tb01 is
 end entity;
 	
 architecture sim of simple_stack_tb01 is
-constant width : integer := 32;
-constant addr_width : integer := 8;
+constant width : integer := work.simple_stack_tb01_RAM.DATA_WIDTH;
+constant addr_width : integer := work.simple_stack_tb01_RAM.ADDR_WIDTH;
 constant base_address : integer := 0;
 
 signal test_ended : boolean := false;
@@ -28,11 +35,10 @@ signal mem_addr : std_logic_vector (addr_width - 1 downto 0) := (others => '0');
 signal mem_data_to_RAM : std_logic_vector(width - 1 downto 0) := (others => '0');	
 signal mem_data_from_RAM : std_logic_vector(width - 1 downto 0) := (others => '0');
 signal mem_we : std_logic :='0';
-	
-shared variable tb_rec : testbench_recorder_protected ;
 
-type stack_mem_type is array (0 to 2**addr_width - 1 ) of std_logic_vector(width - 1 downto 0);	
-signal stack_mem : stack_mem_type := (others => (others => '0'));
+-- prepare to access the protected type, in an analagous way to a C++ class
+shared variable bram : work.simple_stack_tb01_RAM.RAM_for_testbench_class ;
+shared variable tb_rec : work.testbench_recorder.testbench_recorder_protected ;
 
 begin
 
@@ -76,21 +82,11 @@ begin
 	end process;	
 	
 	memory: process is
-	variable sp : integer;
-	begin
+	begin	
 		wait until rising_edge(clk);
-		sp := to_integer(unsigned(mem_addr));				
-			if mem_we = '1' then									
-				stack_mem(sp) <= mem_data_to_RAM;
-				mem_data_from_RAM <= mem_data_to_RAM;		-- write before read RAM				
-			else
-				stack_mem(sp) <= stack_mem(sp);
-				mem_data_from_RAM <= stack_mem(sp);						
-			end if;
-				
+		bram.memory_port(mem_addr, mem_data_to_RAM, mem_data_from_RAM, mem_we);
 	end process;
-	
-	
+		
 	sequencer_process: process is
 	begin
 		wait for 3 * half_clock_period;
