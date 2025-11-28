@@ -14,14 +14,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="143.006 ns"></ZoomEndTime>
+      <ZoomEndTime time="321.360 ns"></ZoomEndTime>
       <Cursor1Time time="365.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="156"></NameColumnWidth>
+      <NameColumnWidth column_width="152"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="8" />
+   <WVObjectSize size="10" />
    <wvobject fp_name="/program_flow_tb02/test_ok" type="other">
       <obj_property name="ElementShortName">test_ok</obj_property>
       <obj_property name="ObjectShortName">test_ok</obj_property>
@@ -38,9 +38,17 @@
       <obj_property name="ElementShortName">program_counter</obj_property>
       <obj_property name="ObjectShortName">program_counter</obj_property>
    </wvobject>
+   <wvobject fp_name="/program_flow_tb02/instruction" type="other">
+      <obj_property name="ElementShortName">instruction</obj_property>
+      <obj_property name="ObjectShortName">instruction</obj_property>
+   </wvobject>
    <wvobject fp_name="/program_flow_tb02/instruction_literal" type="other">
       <obj_property name="ElementShortName">instruction_literal</obj_property>
       <obj_property name="ObjectShortName">instruction_literal</obj_property>
+   </wvobject>
+   <wvobject fp_name="/program_flow_tb02/instruction_duration" type="other">
+      <obj_property name="ElementShortName">instruction_duration</obj_property>
+      <obj_property name="ObjectShortName">instruction_duration</obj_property>
    </wvobject>
    <wvobject fp_name="/program_flow_tb02/validfor_execution" type="logic">
       <obj_property name="ElementShortName">validfor_execution</obj_property>

@@ -37,22 +37,26 @@ shared variable tb_rec : testbench_recorder_protected ;
 -- example program flow data
 type instruction_mem_type is array (0 to mem_depth) of instruction_type;
 signal instruction_mem : instruction_mem_type := 
-	(others => pf_nxt_1);
+	( 3 => pf_jsr, 7 => pf_jsl, 16 => pf_bra, 36 => pf_rts, 46 => pf_rts, others => pf_nxt_1);
 
 type instruction_literal_mem_type is array (0 to mem_depth) of instruction_literal_type;
-signal instruction_literal_mem : instruction_literal_mem_type := (others => 0);
+signal instruction_literal_mem : instruction_literal_mem_type := 
+	( 7 => 42, 16 => -1, others => 0);
 	
 type instruction_duration_mem_type is array (0 to mem_depth) of instruction_duration_type;
-signal instruction_duration_mem : instruction_duration_mem_type := (others => 0);
+signal instruction_duration_mem : instruction_duration_mem_type := 
+	( 16 => 1, others => 0);
 	
 type equal_zero_mem_type is array (0 to mem_depth) of std_logic;
 signal equal_zero_mem : equal_zero_mem_type := (others => '0');
 
 type p_stack_cell_mem_type is array (0 to mem_depth) of program_counter_type;
-signal p_stack_cell_mem : p_stack_cell_mem_type := (others => 0);
+signal p_stack_cell_mem : p_stack_cell_mem_type := 
+	( 3 => 32, others => 0);
 	
 type s_stack_cell_mem_type is array (0 to mem_depth) of program_counter_type;
-signal s_stack_cell_mem : s_stack_cell_mem_type := (others => 0);
+signal s_stack_cell_mem : s_stack_cell_mem_type := 
+	(36 => 4, 46 => 8, others => 0);
 	
 begin
 	
@@ -84,7 +88,8 @@ begin
 		instruction_duration <= instruction_duration_mem(program_counter);				
 		equal_zero <= equal_zero_mem(program_counter);	
 		top_of_p_stack <= p_stack_cell_mem(program_counter);
-			
+		top_of_s_stack <= s_stack_cell_mem(program_counter);
+				
 	end process;
 	
 	recorder: process is
@@ -112,7 +117,7 @@ begin
 		rst <= '0';
 		
 		wait until rising_edge(clk);
-			
+	 	
 		wait for 36 * clock_period;
 		
 		wait for 4 * clock_period;		
