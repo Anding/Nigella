@@ -26,5 +26,11 @@ package types is
 	
 	type stack_op_type is ( op_nop, op_psh, op_pop, op_rpl);
 		
+	-- branch bits encoding
+	constant bb_nop : std_logic_vector(1 downto 0) := "00";
+	constant bb_rts : std_logic_vector(1 downto 0) := "01";	
+	constant bb_beq : std_logic_vector(1 downto 0) := "10";	
+	constant bb_bra : std_logic_vector(1 downto 0) := "11";				
+		
 end package;
 		
