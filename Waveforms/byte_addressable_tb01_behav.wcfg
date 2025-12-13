@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="byte_addressable_tb01_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="byte_addressable_tb01" />
+            <top_module name="constants" />
+            <top_module name="testbench_recorder" />
+            <top_module name="types" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="185.001 ns"></ZoomEndTime>
+      <Cursor1Time time="88.268 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="301"></NameColumnWidth>
+      <ValueColumnWidth column_width="95"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="6" />
+   <wvobject fp_name="/byte_addressable_tb01/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/byte_addressable_tb01/test_ended" type="other">
+      <obj_property name="ElementShortName">test_ended</obj_property>
+      <obj_property name="ObjectShortName">test_ended</obj_property>
+   </wvobject>
+   <wvobject fp_name="/byte_addressable_tb01/test_ok" type="other">
+      <obj_property name="ElementShortName">test_ok</obj_property>
+      <obj_property name="ObjectShortName">test_ok</obj_property>
+   </wvobject>
+   <wvobject fp_name="group90" type="group">
+      <obj_property name="label">Address</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/byte_addressable_tb01/addr" type="other">
+         <obj_property name="ElementShortName">addr</obj_property>
+         <obj_property name="ObjectShortName">addr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/addr_a" type="array">
+         <obj_property name="ElementShortName">addr_a[7:0]</obj_property>
+         <obj_property name="ObjectShortName">addr_a[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/addr_b" type="array">
+         <obj_property name="ElementShortName">addr_b[7:0]</obj_property>
+         <obj_property name="ObjectShortName">addr_b[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group88" type="group">
+      <obj_property name="label">WRITE databus</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/byte_addressable_tb01/addr" type="other">
+         <obj_property name="ElementShortName">addr</obj_property>
+         <obj_property name="ObjectShortName">addr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/mem_data_to_RAM" type="array">
+         <obj_property name="ElementShortName">mem_data_to_RAM[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_data_to_RAM[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/mem_data_to_RAM_a" type="array">
+         <obj_property name="ElementShortName">mem_data_to_RAM_a[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_data_to_RAM_a[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/mem_data_to_RAM_b" type="array">
+         <obj_property name="ElementShortName">mem_data_to_RAM_b[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_data_to_RAM_b[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/we" type="array">
+         <obj_property name="ElementShortName">we[3:0]</obj_property>
+         <obj_property name="ObjectShortName">we[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/we_a" type="array">
+         <obj_property name="ElementShortName">we_a[3:0]</obj_property>
+         <obj_property name="ObjectShortName">we_a[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/we_b" type="array">
+         <obj_property name="ElementShortName">we_b[3:0]</obj_property>
+         <obj_property name="ObjectShortName">we_b[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group89" type="group">
+      <obj_property name="label">READ databus</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/byte_addressable_tb01/addr" type="other">
+         <obj_property name="ElementShortName">addr</obj_property>
+         <obj_property name="ObjectShortName">addr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/mem_data_from_RAM" type="array">
+         <obj_property name="ElementShortName">mem_data_from_RAM[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_data_from_RAM[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/mem_data_from_RAM_a" type="array">
+         <obj_property name="ElementShortName">mem_data_from_RAM_a[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_data_from_RAM_a[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/byte_addressable_tb01/mem_data_from_RAM_b" type="array">
+         <obj_property name="ElementShortName">mem_data_from_RAM_b[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_data_from_RAM_b[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
